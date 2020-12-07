@@ -1,0 +1,70 @@
+2. When the installation is finished check it by running the following commands from
+terminal (or cmd):
+
+gal@ubuntu:~$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.19 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SELECT now();
++---------------------+
+| now()               |
++---------------------+
+| 2020-02-11 13:47:36 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT user();
++----------------+
+| user()         |
++----------------+
+| root@localhost |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT version();
++-----------+
+| version() |
++-----------+
+| 8.0.19    |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> exit
+Bye
+
+4. Create a python file with the following code and execute it (remember to change the
+username and password if needed). If you chose to install mysql-connector-python
+change the script accordingly:
+
+import pymysql
+username = 'root'
+password = 'root'
+con = pymysql.connect(user=username, password=password)
+cur = con.cursor()
+cur.execute("SELECT now()")
+now = cur.fetchone()
+print("Database time: {}".format(now[0]))
+cur = con.cursor()
+cur.execute("SELECT user()")
+user = cur.fetchone()
+print("Database user: {}".format(user[0]))
+cur = con.cursor()
+cur.execute("SELECT VERSION()")
+version = cur.fetchone()
+print("Database version: {}".format(version[0]))
+
+gal@ubuntu:~/PycharmProjects/untitled$ touch my_sql.py
+gal@ubuntu:~/PycharmProjects/untitled$ python my_sql.py
+Database time: 2020-02-11 14:27:06
+Database user: root@localhost
+Database version: 8.0.19

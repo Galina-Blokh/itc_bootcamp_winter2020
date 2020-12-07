@@ -1,0 +1,100 @@
+1. List all the actors who participated in “Star Wars” or “Return of the Jedi”?
+
+mysql> SELECT full_name actors_who_played_in_Star_Wars 
+    -> FROM actors 
+    -> INNER JOIN cast ON cast.actor_id = actors.id 
+    -> WHERE cast.movie_id 
+    -> IN (select distinct movie_id from cast 
+    -> inner join movies 
+    -> on movies.id = cast.movie_id 
+    -> where (title LIKE 'Star Wars' 
+    -> or title LIKE 'Return of the Jedi'));
++--------------------------------+
+| actors_who_played_in_Star_Wars |
++--------------------------------+
+| Graham Ashley                  |
+| Mark Austin                    |
+| Kenny Baker                    |
+| Rick Baker                     |
+| Scott Beach                    |
+	*************************
+| Gerald Staddon                 |
+| Josephine Staddon              |
+| Kevin Thompson                 |
+| Kendra Wall                    |
+| Brian Wheeler                  |
+| Butch Wilhelm                  |
+| Dalyn Chew                     |
+| Celia Fushille-Burke           |
+| Mercedes Ngoh                  |
+| Jennifer Jaffe                 |
++--------------------------------+
+197 rows in set (0.04 sec)
+
+
+2. Find the top five actors with the most diverse career (i.e. participation in movies of
+different genres).
+
+mysql> SELECT DISTINCT full_name most_diverse_career_actors, 
+    ->     COUNT(DISTINCT movies.genre) count_genre FROM actors
+    ->     INNER JOIN cast ON cast.actor_id = actors.id
+    ->     INNER JOIN movies ON movies.id = cast.movie_id 
+    ->     GROUP BY full_name ORDER BY COUNT(movies.genre) DESC, full_name limit 5;
++----------------------------+-------------+
+| most_diverse_career_actors | count_genre |
++----------------------------+-------------+
+| Kevin Bacon                |           6 |
+| Bill Paxton                |           3 |
+| Brad Pitt                  |           3 |
+| Michael Madsen             |           3 |
+| Steve Buscemi              |           2 |
++----------------------------+-------------+
+5 rows in set (0.03 sec)
+
+
+
+3. Which actor holds the record for participating in the most films in a single year?
+mysql> SELECT actor_id,full_name,count(year) as num_years  FROM cast  JOIN movies on movie_id=id   JOIN actors ON actor_id=actors.id   GROUP BY actor_id,year   ORDER BY num_years DESC LIMIT 1;
++----------+--------------+-----------+
+| actor_id | full_name    | num_years |
++----------+--------------+-----------+
+|   602370 | Cameron Diaz |         2 |
++----------+--------------+-----------+
+1 row in set (0.02 sec)
+
+
+4. What is the average career span (i.e. years between the first film and the last film) of actors who participated in at least five films during their entire career?
+SELECT actor_id,full_name,start,end,end-start as career_span,num_movies  FROM  (SELECT actor_id,full_name,min(year) start,max(year) end,count(movie_id) as num_movies FROM cast JOIN movies on movie_id=id  JOIN actors ON actor_id=actors.id GROUP BY actor_id) as actors_c where num_movies>4  ORDER BY career_span DESC;
++----------+-------------+-------+------+-------------+------------+
+| actor_id | full_name   | start | end  | career_span | num_movies |
++----------+-------------+-------+------+-------------+------------+
+|    22591 | Kevin Bacon |  1978 | 2003 |          25 |          9 |
++----------+-------------+-------+------+-------------+------------+
+1 row in set (0.01 sec)
+
+
+
+5. Which actor had the longest hiatus between two of his films?
+ mysql> SELECT full_name, a.year-(
+    ->             SELECT year 
+    ->             FROM (SELECT actor_id,full_name,year
+    ->                   FROM cast JOIN movies on movie_id=id 
+    ->                   JOIN actors ON actor_id=actors.id) as b
+    ->             WHERE a.actor_id = b.actor_id
+    ->                   AND a.year > b.year
+    ->             ORDER BY year desc LIMIT 1) AS hiatus
+    -> FROM(SELECT actor_id,full_name,year
+    ->          FROM cast JOIN movies on movie_id=id 
+    ->          JOIN actors ON actor_id=actors.id) AS a 
+    -> ORDER BY hiatus DESC LIMIT 1;
++-----------------+--------+
+| full_name       | hiatus |
++-----------------+--------+
+| Malcolm Tierney |     18 |
++-----------------+--------+
+1 row in set (2.46 sec)
+
+
+
+
+

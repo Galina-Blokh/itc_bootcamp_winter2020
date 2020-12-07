@@ -1,0 +1,59 @@
+1. Extract the files from the compressed archive file (hint: use tar). Delete the archive file
+when done.
+gal@ubuntu:~$ cd Downloads
+gal@ubuntu:~/Downloads$ ls
+'200207123327_Ex 13 - csv json and pkl.py'   hw_25000.csv       mlb_players.pkl
+ comments.csv                                hw_25000.json      OS_Terminal
+ comments.json                               mlb_players.csv
+ cpp_headers.tar.gz                          mlb_players.json
+gal@ubuntu:~/Downloads$ mkdir cpp_he
+gal@ubuntu:~/Downloads$ tar -xf cpp_headers.tar.gz -C cpp_he
+gal@ubuntu:~/Downloads$ cd cpp_he
+
+2. What is the biggest file in the current directory?
+gal@ubuntu:~/Downloads/cpp_headers$ ls -lSh | head -n 5
+total 1.1M
+-rw-r--r-- 1 gal gal  80K Jan 26  2016 functional
+-rw-r--r-- 1 gal gal  66K Jan 26  2016 limits
+-rw-r--r-- 1 gal gal  58K Jan 26  2016 type_traits
+-rw-r--r-- 1 gal gal  52K Jan 26  2016 complex
+
+
+
+a. How big is it?
+gal@ubuntu:~/Downloads/cpp_headers$ ls -sh functional
+80K functional
+
+
+b. What are the last 5 lines of that file when you sort it alphabetically? (hint: use sort
+and tail)
+gal@ubuntu:~/Downloads/cpp_headers$  sort functional | tail
+  // when casting between void pointers and pointers-to-pointers.
+  // when first argument has integer type, so that std::bind() will
+  // when the first argument might be a socket file descriptor.
+   *  will have a weak result type. See cases below.
+       *  wrapper.
+       *  __x (if it has one).
+	  __x._M_manager(_M_functor, __x._M_functor, __clone_functor);
+	__x.swap(*this);
+    { __x.swap(__y); }
+// You should have received a copy of the GNU General Public License and
+
+c. Print the first row of the file to the screen
+gal@ubuntu:~/Downloads/cpp_headers$ head -n3 functional
+// <functional> -*- C++ -*-
+
+// Copyright (C) 2001-2013 Free Software Foundation, Inc.
+
+
+d. What are the current file permissions? Print it. What does it mean?
+gal@ubuntu:~/Downloads/cpp_headers$ ls -l  functional
+-rw-r--r-- 1 gal gal 81127 Jan 26  2016 functional
+owner can read and write, groups and others can only read
+
+e. Change the permissions of the file so that everyone can write, read and execute
+it.
+gal@ubuntu:~/Downloads/cpp_headers$ chmod 777 functional
+gal@ubuntu:~/Downloads/cpp_headers$ ls -l  functional
+-rwxrwxrwx 1 gal gal 81127 Jan 26  2016 functional
+

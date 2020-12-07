@@ -1,0 +1,84 @@
+1. Which databases are managed by your server?
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| imdb               |
+| information_schema |
+| mydb               |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.01 sec)
+
+
+2. Which tables compose the imdb database?
+mysql> use imdb;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_imdb |
++----------------+
+| actors         |
+| cast           |
+| movies         |
++----------------+
+3 rows in set (0.00 sec)
+
+3. What information can you find in the “movies” table?
+mysql> SHOW COLUMNS FROM movies;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| id    | int          | NO   | PRI | 0       |       |
+| title | varchar(100) | YES  |     | NULL    |       |
+| year  | int          | YES  |     | NULL    |       |
+| genre | varchar(100) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+mysql> Select* FROM movies;
++--------+------------------------------+------+-----------+
+| id     | title                        | year | genre     |
++--------+------------------------------+------+-----------+
+|  10920 | Aliens                       | 1986 | Sci-Fi    |
+|  17173 | Animal House                 | 1978 | Action    |
+|  18979 | Apollo 13                    | 1995 | Thriller  |
+|  30959 | Batman Begins                | 2005 | Horror    |
+|  46169 | Braveheart                   | 1995 | Comedy    |
+| 109093 | Fargo                        | 1996 | Drama     |
+| 111813 | Few Good Men, A              | 1992 | Action    |
+| 112290 | Fight Club                   | 1999 | Crime     |
+| 116907 | Footloose                    | 1984 | Fantasy   |
+| 124110 | Garden State                 | 2004 | Thriller  |
+| 130128 | Godfather, The               | 1972 | Adventure |
+| 147603 | Hollow Man                   | 2000 | Drama     |
+| 167324 | JFK                          | 1991 | War       |
+| 176711 | Kill Bill: Vol. 1            | 2003 | Action    |
+| 176712 | Kill Bill: Vol. 2            | 2004 | Crime     |
+| 192017 | Little Mermaid, The          | 1989 | Thriller  |
+| 194874 | Lost in Translation          | 2003 | Drama     |
+| 207992 | Matrix, The                  | 1999 | Drama     |
+| 210511 | Memento                      | 2000 | Thriller  |
+| 224842 | Mystic River                 | 2003 | Drama     |
+| 237431 | O Brother, Where Art Thou?   | 2000 | Thriller  |
+| 238072 | Oceans Eleven                | 2001 | Mystery   |
+| 238695 | Office Space                 | 1999 | Crime     |
+| 254943 | Pi                           | 1998 | Drama     |
+| 256630 | Pirates of the Caribbean     | 2003 | Family    |
+| 257264 | Planes, Trains & Automobiles | 1987 | Music     |
+| 267038 | Pulp Fiction                 | 1994 | Drama     |
+| 276217 | Reservoir Dogs               | 1992 | Comedy    |
+| 297838 | Shawshank Redemption, The    | 1994 | Crime     |
+| 300229 | Shrek                        | 2001 | Drama     |
+| 306032 | Snatch.                      | 2000 | Horror    |
+| 313459 | Star Wars                    | 1977 | Sci-Fi    |
+| 314965 | Stir of Echoes               | 1999 | Thriller  |
+| 333856 | Titanic                      | 1997 | Crime     |
+| 344203 | UHF                          | 1989 | Drama     |
+| 350424 | Vanilla Sky                  | 2001 | Mystery   |
+| 300270 | Return of the Jedi           | 1983 | Thriller  |
+| 333777 | Fake Movie                   | 2000 | NULL      |
++--------+------------------------------+------+-----------+
+38 rows in set (0.00 sec)
+

@@ -1,0 +1,80 @@
+Tasks:
+1. Create a folder named “ITC” under your home directory.
+gal@ubuntu:~$ mkdir ITC
+gal@ubuntu:~$ ls
+anaconda3  Downloads         Music     PycharmProjects  Untitled.ipynb
+Desktop    examples.desktop  Pictures  snap             Videos
+Documents  ITC               Public    Templates
+
+2. Change the current working directory to the directory you’ve just created.
+gal@ubuntu:~$ cd ITC
+gal@ubuntu:~/ITC$
+
+3. Create a file named “1.txt”, which contains the string “hello” (without the quotes).
+Perform this task in one command only.
+gal@ubuntu:~/ITC$ echo "hello" > 1.txt
+gal@ubuntu:~/ITC$ ls
+1.txt.txt
+gal@ubuntu:~/ITC$ cat 1.txt
+hello
+
+4. Show the contents of the file “1.txt”. That is, the output of your command should be
+“hello”.
+gal@ubuntu:~/ITC$ cat 1.txt
+hello
+
+5. Make the file “1.txt” read-only.
+gal@ubuntu:~/ITC$ chmod 444 1.txt
+
+6. Make the file “1.txt” not read-only, so we can later delete it.
+gal@ubuntu:~/ITC$ chmod 777 1.txt
+
+7. Delete the file “1.txt”. Make sure you perform this task with a command that doesn’t
+ask the user whether it’s OK to delete that file.
+gal@ubuntu:~/ITC$ rm  1.txt
+
+8. Create the python file “hello_world.py”, which contains a print(‘hello world’) command.
+gal@ubuntu:~/ITC$ echo "print('hello world')" > hello_world.py
+gal@ubuntu:~/ITC$ cat hello_world.py
+print('hello world')
+
+9. Execute the python script you've just created.
+gal@ubuntu:~/ITC$ python hello_world.py
+hello world
+
+10.Create a folder named “nested” under the “ITC” folder which you have created.
+gal@ubuntu:~/ITC$ mkdir nested
+
+
+11.Create an empty file named “nested.txt” inside the “nested” folder.
+ggal@ubuntu:~/ITC$ cd nested
+gal@ubuntu:~/ITC/nested$ touch nested.txt
+
+
+12.Verify that your file is indeed empty by making sure it has 0 bytes.
+gal@ubuntu:~/ITC/nested$ ls -sh nested.txt
+0 nested.txt
+
+13.Display the contents of the “ITC” folder.
+gal@ubuntu:~/ITC$ ls -a
+.  ..  hello_world.py  nested
+
+
+14.Display the Contents of the “ITC” folder, including the content of its subfolder.
+gal@ubuntu:~/ITC$ dir -R
+.:
+hello_world.py	nested
+
+./nested:
+nested.txt
+
+15.Use one command to erase the “ITC” folder you have created, including “nested” folder
+and “nested.txt” file. Note: you may use an additional command to change the current
+directory.
+gal@ubuntu:~/ITC$ cd ..
+gal@ubuntu:~$ rm -rf ITC
+gal@ubuntu:~$ ls
+anaconda3  Downloads         Pictures         snap            Videos
+Desktop    examples.desktop  Public           Templates
+Documents  Music             PycharmProjects  Untitled.ipynb
+gal@ubuntu:~$ 

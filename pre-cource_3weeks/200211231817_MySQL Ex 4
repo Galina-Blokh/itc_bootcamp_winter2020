@@ -1,0 +1,90 @@
+1. How many actors participated in the film “Aliens”?
+mysql> SELECT COUNT(actor_id) 
+    -> AS actors_participated_in_the_film_Aliens
+    -> FROM cast 
+    -> INNER JOIN movies 
+    -> ON movies.id = cast.movie_id
+    -> WHERE title = 'Aliens';
++----------------------------------------+
+| actors_participated_in_the_film_Aliens |
++----------------------------------------+
+|                                     30 |
++----------------------------------------+
+1 row in set (0.00 sec)
+
+
+2. Which films Kevin Bacon participated in?
+mysql> SELECT title AS Kevin_Bacons_films
+    -> FROM movies 
+    -> INNER JOIN cast 
+    -> ON cast.movie_id  = movies.id
+    -> INNER JOIN actors ON actors.id = cast.actor_id
+    -> WHERE full_name = 'Kevin Bacon';
++------------------------------+
+| Kevin_Bacons_films           |
++------------------------------+
+| Animal House                 |
+| Apollo 13                    |
+| Few Good Men, A              |
+| Footloose                    |
+| Hollow Man                   |
+| JFK                          |
+| Mystic River                 |
+| Planes, Trains & Automobiles |
+| Stir of Echoes               |
++------------------------------+
+9 rows in set (0.02 sec)
+
+
+3. Which actors have participated in a films with Kevin Bacon?
+
+SELECT title, 
+GROUP_CONCAT(actors.full_name ORDER BY actors.id)
+actors_who_played_with_Kevin_Bacon 
+FROM movies
+INNER JOIN cast ON movies.id = cast.movie_id INNER JOIN actors ON cast.actor_id = actors.id 
+WHERE cast.movie_id IN (select movie_id from cast inner join actors on actors.id = cast.actor_id where full_name= 'Kevin Bacon')
+GROUP BY movies.title; 
+
+mysql> SELECT title, 
+    -> GROUP_CONCAT(actors.full_name ORDER BY actors.id)
+    -> actors_who_played_with_Kevin_Bacon 
+    -> FROM movies
+    -> INNER JOIN cast ON movies.id = cast.movie_id INNER JOIN actors ON cast.actor_id = actors.id 
+    -> WHERE cast.movie_id IN (select movie_id from cast inner join actors on actors.id = cast.actor_id where full_name= 'Kevin Bacon')
+    -> GROUP BY movies.title; 
++------------------------------+-----------------------------------------------------------------------------------title                      | actors_who_played_with_Kevin_Bacon   
+------------------------------------------------------------------------------------------------------------------
+| Animal House             |Kevin Bacon,John 
+							Belushi,Stephen Bishop,Bruce Bonnheim,Robert Cray,Joshua 
+							Daniel,Cesare Danova,James Daughton,Jebidiah R. Dumas,Rick Eby,Robert Elliott,Reginald Farmer,John Freeman,Stephen Furst,Rick Greenough,Tom Hulce,DeWayne Jessie,Douglas Kenney,Tim Matheson,Sean McCartin,Bruce McGill,Mark Metcalf,Chris Miller,Peter Riegert,Raymone Robinson,Fred Simonds,Donald Sutherland,John Vernon,James Widdoes,Karen Allen,Lisa Baur,Judith Belushi-Pisano,Verna Bloom,Katherine Denning,Stacy Grooman,Sarah Holcomb,Sunny Johnson,Aseneth Jurgenson,Priscilla Lauris,Eliza Roberts,Martha Smith,Helen Vick,Mary Louise Weller 
+------------------------------------------------------------------------------------------------------------------
+| Apollo 13                | van Allen,Walter 
+							Altman,David Andrews,Neil Armstrong,Kevin Bacon,Thom Barry,Jules 
+							Bergman,Xander Berkeley,Steve Bernie,John Bishop,Geoffrey Blake,Ben Bode,Jon Bruno,Frank Cavestani,Tory Christopher,Christian Clemenson,Jack Conley,Michael S. Connolly,Roger Corman,Thomas Crawford,Walter Cronkite,Brett Cullen,Joseph Culp,Loren Dean,John Dullaghan,Wayne Duvall,Chris Ellis,Christopher John Fields,Matthew Michael Goodall,Taylor Goodall,Googy Gress,Max Grodénchik,Todd Hallowell,Tom Hanks,Ed Harris,Ryan Holihan,Clint Howard,Rance Howard,Miko Hughes,Endre Hules,Gabriel Jarret,Herb Jefferson Jr.,Jeffrey Kluger,Andrew Lipschultz,Todd Louiso,Jim Lovell,Paul Mantee,Brian Markinson,Ben Marley,John M. Mathews,Marc McClure,Mark McKeel,Ray McKinnon,Jim Meskimen,Patrick Mickler,Andy Milder,Mark D. Newman,Austin OBrien,Bill Paxton,Manley Pope Jr.,Steve Rankin,Tracy Reiner,James Ritz,Reed Rudy,Steve Ruge,Arthur Senzy,John Short,Gary Sinise,Max Elliott Slade,Joe Spano,Ned Vaughn,Walter von Huene,John Wheeler,Mark Wheeler,Kenneth  
+------------------------------------------------------------------------------------------------------------------
+| Few Good Men, A          | Kevin Bacon,Xander 
+							Berkeley,Wolfgang Bodison,David Bowe,Harry Caesar,Frank 
+							Cavestani,Matt Craven,Tom Cruise,Michael DeLorenzo,Cuba Gooding Jr.,Christopher Guest,John M. Jackson,Oscar Jordan,Lawrence Lowe,Joshua Malina,James Marshall,John M. Mathews,Jan Munroe,Geoffrey Nauffts,Jack Nicholson,Ron Ostrow,Kevin Pollak,J.A. Preston,Matthew Saks,Arthur Senzy,Aaron Sorkin,Kiefer Sutherland,Cameron Thor,J.T. Walsh,Alex Wexo,Gene Whittington,Noah Wyle,Demi Moore,Maud Winchester   
+
+****************************************************************************************************************
+------------------------------------------------------------------------------------------------------------------
+| Stir of Echoes           | Mike Bacarella,
+							Kevin Bacon,Zachary David Cope,Richard Cotovsky,Kevin Dunn,
+							Kevin Scott Greer,George vey,Lou Meza,Larry Nazimek,Larry Neumann Jr.,Conor OFarrell,Antonio Polk,Jim Raqelin,Steve Rifkin,Duane Sharp,Eddie Bo Smith Jr.,Christian Stolte,Stephen Eugene Walker,Chalon Williams,Mary Kay Cook,lleana Douglas,Kathryn Erbe,Lisa Lewis,Jennifer Morrison,Lusia Strus,Kelly Trznadel,Karen Vaccaro,Rosario Varela,Liza Weil,Hyowon K. Yoo 
+------------------------------------------------------------------------------------------------------------------                                                                                                                        
+
+4. Which actor has the highest average wage? The column salary is within the cast table
+mysql> SELECT full_name, AVG(salary)
+    -> FROM actors, cast
+    -> WHERE cast.actor_id = actors.id
+    -> GROUP BY actors.full_name ORDER BY AVG(cast.salary)
+    -> DESC limit 1;
++-------------+-------------+
+| full_name   | AVG(salary) |
++-------------+-------------+
+| Grant James | 999435.0000 |
++-------------+-------------+
+1 row in set (0.02 sec)
+
+
